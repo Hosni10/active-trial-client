@@ -27,6 +27,7 @@ const BookingForm = ({ onClose }) => {
     divisionLastSeason: "",
     strengthWeakness: "",
     mobileNumber: "",
+    email: "",
     academyClub: "",
     preferredLocations: [],
     trialDate: "",
@@ -100,6 +101,18 @@ const BookingForm = ({ onClose }) => {
         errors.mobileNumber = "Please enter a valid UAE phone number (e.g., 0501234567, +971501234567)";
       }
     }
+
+    if (!formData.email.trim()) {
+      errors.email = "Email address is required";
+    } else {
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        errors.email = "Please enter a valid email address";
+      }
+    }
+
+
 
     if (!formData.academyClub.trim()) {
       errors.academyClub = "Academy/Club is required";
@@ -406,27 +419,58 @@ const BookingForm = ({ onClose }) => {
 
                 {/* Contact Information */}
                 <div className="bg-blue-50/50 rounded-lg p-4 border border-blue-100">
-                  <div className="space-y-2">
-                    <Label htmlFor="mobileNumber" className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                      <Phone className="h-4 w-4 text-blue-600" />
-                      Mobile Number *
-                    </Label>
-                    <Input
-                      id="mobileNumber"
-                      type="tel"
-                      placeholder="e.g., 0501234567 or +971501234567"
-                      value={formData.mobileNumber}
-                      onChange={(e) => handleInputChange("mobileNumber", e.target.value)}
-                      className="h-11"
-                    />
-                    <p className="text-xs text-blue-600 mt-1">
-                      It must be accurate so you can be registered in the tournament app and notifications!
-                    </p>
-                    {errors.mobileNumber && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errors.mobileNumber}
+                  <h4 className="text-sm font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    <Phone className="h-4 w-4 text-blue-600" />
+                    Contact Information
+                  </h4>
+                  
+                  <div className="space-y-4">
+                    {/* Mobile Number */}
+                    <div className="space-y-2">
+                      <Label htmlFor="mobileNumber" className="text-sm font-medium text-gray-700">
+                        Mobile Number (UAE) *
+                      </Label>
+                      <Input
+                        id="mobileNumber"
+                        type="tel"
+                        placeholder="e.g., 0501234567 or +971501234567"
+                        value={formData.mobileNumber}
+                        onChange={(e) => handleInputChange("mobileNumber", e.target.value)}
+                        className="h-11"
+                      />
+                      <p className="text-xs text-blue-600 mt-1">
+                        It must be accurate so you can be registered in the tournament app and notifications!
                       </p>
-                    )}
+                      {errors.mobileNumber && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {errors.mobileNumber}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Email Address */}
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+                        Email Address *
+                      </Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="e.g., player@example.com"
+                        value={formData.email}
+                        onChange={(e) => handleInputChange("email", e.target.value)}
+                        className="h-11"
+                      />
+                      <p className="text-xs text-blue-600 mt-1">
+                        We'll send tournament updates and confirmation to this email address.
+                      </p>
+                      {errors.email && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {errors.email}
+                        </p>
+                      )}
+                    </div>
+
                   </div>
                 </div>
 

@@ -17,11 +17,6 @@ export default function Layout({ children }) {
               </Link>
             </div>
             <div className="flex items-center space-x-4">
-              <Link to="/football-clinic">
-                <Button variant="ghost" className="hover:text-red-600">
-                  Football Clinic
-                </Button>
-              </Link>
               <Button
                 onClick={() => {
                   document.getElementById("contact").scrollIntoView({

@@ -25,6 +25,7 @@ import {
   Lightbulb,
 } from "lucide-react";
 import activeImage from "../assets/active.jpg";
+import girls from "../assets/girls.jpg";
 import saadyatImage from "../assets/saadyat.jpg";
 
 import backgroundImage from "../assets/background.jpeg";
@@ -50,18 +51,35 @@ const clinicActivities = {
   ],
   scheduleByLocation: {
     mariah: {
-      label: "Active Mariah Island",
+      label: "Active Al Maryah Island",
       days: "Tuesday & Thursday",
       age: "U6 to U18",
-      time: "5:00 PM – 9:00 PM",
+      time: "4:45 PM – 9:00 PM",
       locationUrl: "https://maps.app.goo.gl/RuGrvSnHH5HNmiF19?g_st=ipc",
+      schedule: [
+        { ageGroup: "U18 Elite", time: "4:45 PM - 6:20 PM", duration: "1h 35m" },
+        { ageGroup: "U10 Elite", time: "5:00 PM - 6:30 PM", duration: "1h 30m" },
+        { ageGroup: "U6, U7", time: "5:30 PM - 6:30 PM", duration: "1h" },
+        { ageGroup: "U8, U9, U10 (interm)", time: "5:15 PM - 6:30 PM", duration: "1h 15m" },
+        { ageGroup: "U12, U14", time: "6:15 PM - 7:45 PM", duration: "1h 30m" },
+        { ageGroup: "U14/U16 Girls", time: "6:15 PM - 7:45 PM", duration: "1h 30m" },
+        { ageGroup: "U15 Elite, U16 Elite", time: "7:30 PM - 9:00 PM", duration: "1h 30m" },
+      ]
     },
     saadiyat: {
-      label: "Saadiyat Island (Theodore Monod French School)",
+      label: "Saadiyat Theodore School",
       days: "Monday & Wednesday",
-      age: "U6 to U18",
-      time: "6:30 PM – 8:30 PM",
+      age: "U6 to U16",
+      time: "6:30 PM – 8:00 PM",
       locationUrl: "https://maps.app.goo.gl/dri8guSuCdT8zcST7?g_st=ipc",
+      schedule: [
+        { ageGroup: "U6, U8", time: "6:30 PM - 7:30 PM", duration: "1h" },
+        { ageGroup: "U10, U12/13", time: "6:30 PM - 7:50 PM", duration: "1h 20m" },
+        { ageGroup: "U12 Elite", time: "6:30 PM - 8:00 PM", duration: "1h 30m", note: "Monday Only" },
+        { ageGroup: "U14 Elite", time: "6:30 PM - 8:00 PM", duration: "1h 30m", note: "Wednesday Only" },
+        { ageGroup: "U15 Elite", time: "6:30 PM - 8:00 PM", duration: "1h 30m", note: "Wednesday Only" },
+        { ageGroup: "U16 Elite", time: "6:30 PM - 8:00 PM", duration: "1h 30m", note: "Monday Only" },
+      ]
     },
   },
   skillsDevelopment: [
@@ -170,117 +188,161 @@ function FootballTrial() {
         </div>
       </section>
 
-      {/* Camp Details Section */}
+      {/* Simplified Trial Details Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Camp Details
+              Trial Details
             </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Professional 90-minute trial sessions with expert coaching and detailed feedback
+            </p>
           </div>
 
+          {/* Location Tabs */}
           <Tabs value={activeLocation} onValueChange={setActiveLocation} className="w-full">
             <TabsList className="grid grid-cols-2 max-w-xl mx-auto">
-              <TabsTrigger value="mariah">Active Mariah Island</TabsTrigger>
-              <TabsTrigger value="saadiyat">Saadiyat Island</TabsTrigger>
+              <TabsTrigger value="mariah">Active Al Maryah Island</TabsTrigger>
+              <TabsTrigger value="saadiyat">Saadiyat Theodore School</TabsTrigger>
             </TabsList>
 
             {/* Active Mariah Island */}
-            <TabsContent value="mariah">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
+            <TabsContent value="mariah" className="mt-8">
+              <div className="grid lg:grid-cols-2 gap-8 items-start">
                 <div className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-3">
-                      <Calendar className="h-6 w-6 text-[#ed3227] mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Schedule</h3>
-                        <p className="text-gray-600">
-                          {clinicActivities.scheduleByLocation.mariah.days}
-                          <br />
-                          {clinicActivities.scheduleByLocation.mariah.time}
-                        </p>
+                  <div className="bg-white rounded-lg p-6 shadow-md">
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">Active Al Maryah Island</h3>
+                    
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-3">
+                        <Calendar className="h-5 w-5 text-[#ed3227]" />
+                        <div>
+                          <p className="font-semibold">{clinicActivities.scheduleByLocation.mariah.days}</p>
+                          <p className="text-gray-600">{clinicActivities.scheduleByLocation.mariah.time}</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <MapPin className="h-5 w-5 text-[#ed3227]" />
+                        <div>
+                          <p className="font-semibold">Location</p>
+                          <p className="text-gray-600">{clinicActivities.scheduleByLocation.mariah.label}</p>
+                          <a 
+                            href={clinicActivities.scheduleByLocation.mariah.locationUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#ed3227] hover:text-[#ed3227]/80 text-sm"
+                          >
+                            View on Google Maps
+                          </a>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <Users className="h-5 w-5 text-[#ed3227]" />
+                        <div>
+                          <p className="font-semibold">Age Groups</p>
+                          <p className="text-gray-600">{clinicActivities.scheduleByLocation.mariah.age}</p>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 border-t border-gray-200">
+                        <h4 className="font-semibold mb-2">What's Included:</h4>
+                        <ul className="text-sm text-gray-600 space-y-1">
+                          <li>• Professional coaching assessment</li>
+                          <li>• Technical skills evaluation</li>
+                          <li>• Detailed feedback report</li>
+                          <li>• Development recommendations</li>
+                        </ul>
                       </div>
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <MapPin className="h-6 w-6 text-[#ed3227] mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Location</h3>
-                        <p className="text-gray-600">{clinicActivities.scheduleByLocation.mariah.label}</p>
-                        <a 
-                          href={clinicActivities.scheduleByLocation.mariah.locationUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center text-[#ed3227] hover:text-[#ed3227]/80 text-sm mt-1 transition-colors"
-                        >
-                          <ExternalLink className="h-4 w-4 mr-1" />
-                          View on Google Maps
-                        </a>
-                      </div>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <Users className="h-6 w-6 text-[#ed3227] mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Age Groups</h3>
-                        <p className="text-gray-600">{clinicActivities.scheduleByLocation.mariah.age}</p>
-                      </div>
-                    </div>
+
+                    <Button 
+                      className="w-full mt-6 bg-[#ed3227] hover:bg-[#ed3227]/90 text-white" 
+                      onClick={() => handlePlanSelect(trialPlan)}
+                    >
+                      Book Trial Session
+                    </Button>
                   </div>
-                  <Button className="bg-[#ed3227] hover:bg-[#ed3227]/90 text-white" onClick={() => handlePlanSelect(trialPlan)}>
-                    Book Trial at Active Mariah Island
-                  </Button>
                 </div>
-                <div className="relative rounded-lg overflow-hidden shadow-lg cursor-pointer" onClick={() => setModalImg({ src: activeImage, alt: "Active Mariah Island Football Training" })}>
-                  <img src={activeImage} alt="Active Mariah Island Football Training" className="w-full h-auto max-h-[600px] object-contain hover:opacity-80 transition-opacity" />
+
+                <div className="relative rounded-lg overflow-hidden shadow-lg cursor-pointer" onClick={() => setModalImg({ src: activeImage, alt: "Active Al Maryah Island Football Training" })}>
+                  <img 
+                    src={activeImage} 
+                    alt="Active Al Maryah Island Football Training" 
+                    className="w-full h-auto object-cover hover:opacity-90 transition-opacity" 
+                  />
                 </div>
               </div>
             </TabsContent>
 
             {/* Saadiyat Island */}
-            <TabsContent value="saadiyat">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-3">
-                      <Calendar className="h-6 w-6 text-[#ed3227] mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Schedule</h3>
-                        <p className="text-gray-600">
-                          {clinicActivities.scheduleByLocation.saadiyat.days}
-                          <br />
-                          {clinicActivities.scheduleByLocation.saadiyat.time}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <MapPin className="h-6 w-6 text-[#ed3227] mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Location</h3>
-                        <p className="text-gray-600">{clinicActivities.scheduleByLocation.saadiyat.label}</p>
-                        <a 
-                          href={clinicActivities.scheduleByLocation.saadiyat.locationUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center text-[#ed3227] hover:text-[#ed3227]/80 text-sm mt-1 transition-colors"
-                        >
-                          <ExternalLink className="h-4 w-4 mr-1" />
-                          View on Google Maps
-                        </a>
-                      </div>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <Users className="h-6 w-6 text-[#ed3227] mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Age Groups</h3>
-                        <p className="text-gray-600">{clinicActivities.scheduleByLocation.saadiyat.age}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <Button className="bg-[#ed3227] hover:bg-[#ed3227]/90 text-white" onClick={() => handlePlanSelect(trialPlan)}>
-                    Book Trial at Saadiyat Island
-                  </Button>
+            <TabsContent value="saadiyat" className="mt-8">
+              <div className="grid lg:grid-cols-2 gap-8 items-start">
+                <div className="relative rounded-lg overflow-hidden shadow-lg cursor-pointer" onClick={() => setModalImg({ src: saadyatImage, alt: "Saadiyat Theodore School Football Training" })}>
+                  <img 
+                    src={saadyatImage} 
+                    alt="Saadiyat Theodore School Football Training" 
+                    className="w-full h-auto object-cover hover:opacity-90 transition-opacity" 
+                  />
                 </div>
-                <div className="relative rounded-lg overflow-hidden shadow-lg cursor-pointer" onClick={() => setModalImg({ src: saadyatImage, alt: "Saadiyat Island Football Training" })}>
-                  <img src={saadyatImage} alt="Saadiyat Island Football Training" className="w-full h-auto max-h-[600px] object-contain hover:opacity-80 transition-opacity" />
+
+                <div className="space-y-6">
+                  <div className="bg-white rounded-lg p-6 shadow-md">
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">Saadiyat Theodore School</h3>
+                    
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-3">
+                        <Calendar className="h-5 w-5 text-[#ed3227]" />
+                        <div>
+                          <p className="font-semibold">{clinicActivities.scheduleByLocation.saadiyat.days}</p>
+                          <p className="text-gray-600">{clinicActivities.scheduleByLocation.saadiyat.time}</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <MapPin className="h-5 w-5 text-[#ed3227]" />
+                        <div>
+                          <p className="font-semibold">Location</p>
+                          <p className="text-gray-600">{clinicActivities.scheduleByLocation.saadiyat.label}</p>
+                          <a 
+                            href={clinicActivities.scheduleByLocation.saadiyat.locationUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#ed3227] hover:text-[#ed3227]/80 text-sm"
+                          >
+                            View on Google Maps
+                          </a>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <Users className="h-5 w-5 text-[#ed3227]" />
+                        <div>
+                          <p className="font-semibold">Age Groups</p>
+                          <p className="text-gray-600">{clinicActivities.scheduleByLocation.saadiyat.age}</p>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 border-t border-gray-200">
+                        <h4 className="font-semibold mb-2">What's Included:</h4>
+                        <ul className="text-sm text-gray-600 space-y-1">
+                          <li>• Professional coaching assessment</li>
+                          <li>• Technical skills evaluation</li>
+                          <li>• Detailed feedback report</li>
+                          <li>• Development recommendations</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <Button 
+                      className="w-full mt-6 bg-[#ed3227] hover:bg-[#ed3227]/90 text-white" 
+                      onClick={() => handlePlanSelect(trialPlan)}
+                    >
+                      Book Trial Session
+                    </Button>
+                  </div>
                 </div>
               </div>
             </TabsContent>
@@ -305,13 +367,13 @@ function FootballTrial() {
               className="relative rounded-lg overflow-hidden shadow-lg cursor-pointer"
               onClick={() =>
                 setModalImg({
-                  src: activeImage,
+                  src: girls,
                   alt: "Atomics Football Training",
                 })
               }
             >
               <img
-                src={activeImage}
+                src={girls}
                 alt="Atomics Football Training"
                 className="w-full h-auto max-h-[600px] object-contain hover:opacity-80 transition-opacity"
               />
@@ -379,101 +441,145 @@ function FootballTrial() {
         </div>
       </section>
 
-      {/* Schedule Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      {/* Detailed Schedule Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Training Schedule
+          <div className="text-center mb-16">
+            <Badge className="mb-4 bg-[#ed3227] text-white hover:bg-[#ed3227]/90">
+              Term 1 Training 2025/2026
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Complete Training Schedule
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Structured training sessions designed for different age groups
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {Object.entries(clinicActivities.scheduleByLocation).map(([key, info], index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <Clock className="h-8 w-8 text-[#ed3227] mx-auto mb-2" />
-                  <CardTitle className="text-lg">{info.label}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <div className="font-semibold text-[#ed3227]">{info.days}</div>
-                    <div className="text-gray-800">{info.age}</div>
-                    <div className="text-gray-800">{info.time}</div>
-                    <a 
-                      href={info.locationUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center text-[#ed3227] hover:text-[#ed3227]/80 text-sm mt-3 transition-colors"
-                    >
-                      <MapPin className="h-4 w-4 mr-1" />
-                      View Location
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          <div className="text-center mt-6">
-            <span className="inline-flex items-center gap-2 text-lg font-semibold text-[#ed3227]">
-              🎯 Limited slots available – serious players only!
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section id="pricing" className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Book Your Trial
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Select your preferred location and book a one-time trial session
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Professional training sessions tailored for different age groups and skill levels. Each session is designed to maximize player development and performance.
             </p>
           </div>
 
-          {/* Location Display */}
-          <div className="flex justify-center mb-8">
-            <div className="bg-[#ed3227] text-white px-6 py-3 rounded-lg font-medium">
-              <MapPin className="h-4 w-4 inline mr-2" />
-              {activeLocation === "mariah"
-                ? clinicActivities.scheduleByLocation.mariah.label
-                : clinicActivities.scheduleByLocation.saadiyat.label}
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card className="relative overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300">
-              <CardHeader>
-                <CardTitle className="text-xl">{trialPlan.name}</CardTitle>
-                <CardDescription>{trialPlan.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="flex-1 flex flex-col">
-                <div className="mb-6">
-                  <span className="text-3xl font-bold">AED {trialPlan.price}</span>
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Active Al Maryah Island Schedule */}
+            <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-blue-50 to-white">
+              <CardHeader className="text-center pb-6">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <MapPin className="h-8 w-8 text-[#ed3227]" />
                 </div>
-                <ul className="space-y-3 mb-6 flex-1">
-                  {trialPlan.features.map((feature, index) => (
-                    <li key={index} className="flex items-start">
-                      <Check className="h-4 w-4 mr-2 text-[#ed3227] mt-1 flex-shrink-0" />
-                      <span className="text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button className="w-full bg-[#ed3227] hover:bg-[#ed3227]/90 text-white mt-auto" onClick={() => handlePlanSelect(trialPlan)}>
-                  Book Trial Session
-                </Button>
+                <CardTitle className="text-2xl font-bold text-gray-900">Active Al Maryah Island</CardTitle>
+                <CardDescription className="text-lg font-semibold text-[#ed3227]">
+                  Tuesday & Thursday
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {clinicActivities.scheduleByLocation.mariah.schedule.map((session, index) => (
+                  <div key={index} className="bg-white rounded-lg p-4 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <h4 className="font-bold text-gray-900 text-lg">{session.ageGroup}</h4>
+                        <p className="text-gray-600 text-sm">{session.time}</p>
+                      </div>
+                      <div className="text-right">
+                        <Badge className="bg-[#ed3227] text-white text-xs">
+                          {session.duration}
+                        </Badge>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <div className="mt-6 pt-4 border-t border-gray-200">
+                  <a 
+                    href={clinicActivities.scheduleByLocation.mariah.locationUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center w-full text-[#ed3227] hover:text-[#ed3227]/80 font-medium transition-colors"
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    View Location on Google Maps
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Saadiyat Theodore School Schedule */}
+            <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-orange-50 to-white">
+              <CardHeader className="text-center pb-6">
+                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <MapPin className="h-8 w-8 text-[#ed3227]" />
+                </div>
+                <CardTitle className="text-2xl font-bold text-gray-900">Saadiyat Theodore School</CardTitle>
+                <CardDescription className="text-lg font-semibold text-[#ed3227]">
+                  Monday & Wednesday
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {clinicActivities.scheduleByLocation.saadiyat.schedule.map((session, index) => (
+                  <div key={index} className="bg-white rounded-lg p-4 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <h4 className="font-bold text-gray-900 text-lg">{session.ageGroup}</h4>
+                        <p className="text-gray-600 text-sm">{session.time}</p>
+                        {session.note && (
+                          <p className="text-[#ed3227] text-xs font-medium mt-1">{session.note}</p>
+                        )}
+                      </div>
+                      <div className="text-right">
+                        <Badge className="bg-[#ed3227] text-white text-xs">
+                          {session.duration}
+                        </Badge>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <div className="mt-6 pt-4 border-t border-gray-200">
+                  <a 
+                    href={clinicActivities.scheduleByLocation.saadiyat.locationUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center w-full text-[#ed3227] hover:text-[#ed3227]/80 font-medium transition-colors"
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    View Location on Google Maps
+                  </a>
+                </div>
               </CardContent>
             </Card>
           </div>
 
+          {/* Additional Information */}
+          <div className="mt-16 grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-[#ed3227]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Clock className="h-8 w-8 text-[#ed3227]" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Session Duration</h3>
+              <p className="text-gray-600">1-1.5 hours per session depending on age group and skill level</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-[#ed3227]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="h-8 w-8 text-[#ed3227]" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Age Groups</h3>
+              <p className="text-gray-600">U6 to U18 with specialized Elite programs for advanced players</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-[#ed3227]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Star className="h-8 w-8 text-[#ed3227]" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Elite Programs</h3>
+              <p className="text-gray-600">Advanced training for serious players with competitive aspirations</p>
+            </div>
+          </div>
 
+          <div className="text-center mt-12">
+            <div className="inline-flex items-center gap-3 bg-[#ed3227]/10 rounded-full px-6 py-3">
+              <span className="text-2xl">🎯</span>
+              <span className="text-lg font-semibold text-[#ed3227]">
+                Limited slots available – serious players only!
+              </span>
+            </div>
+          </div>
         </div>
       </section>
+
+
 
       {/* Booking Form Modal */}
       {showBookingForm && selectedPlan && (

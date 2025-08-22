@@ -248,7 +248,7 @@ const AdminDashboard = () => {
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
-                placeholder="Search by name, team, or phone..."
+                placeholder="Search by name, team, phone, or email..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
@@ -283,6 +283,8 @@ const AdminDashboard = () => {
                 <TableHead>Team</TableHead>
                 <TableHead>Position</TableHead>
                 <TableHead>Contact</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Phone</TableHead>
                 <TableHead>Trial Date</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Actions</TableHead>
@@ -309,6 +311,16 @@ const AdminDashboard = () => {
                     <div className="flex items-center gap-1">
                       <Phone className="h-3 w-3" />
                       {registration.mobileNumber}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="text-sm text-gray-600">
+                      {registration.email}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="text-sm text-gray-600">
+                      {registration.phoneNumber}
                     </div>
                   </TableCell>
                   <TableCell>
