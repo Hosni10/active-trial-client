@@ -13,8 +13,9 @@ import {
 import { Textarea } from "./ui/textarea.jsx";
 import { Badge } from "./ui/badge.jsx";
 import { Checkbox } from "./ui/checkbox.jsx";
-import { X, Calendar, User, Phone, Trophy, Target, MapPin } from "lucide-react";
+import { X, Calendar, User, Phone, Trophy, Target, MapPin, CreditCard } from "lucide-react";
 import { toast, Toaster } from "sonner";
+import PaymentForm from "./PaymentForm.jsx";
 
 const BookingForm = ({ onClose }) => {
   const navigate = useNavigate();
@@ -31,10 +32,13 @@ const BookingForm = ({ onClose }) => {
     academyClub: "",
     preferredLocations: [],
     trialDate: "",
+    paymentAmount: "",
   });
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+  const [registrationData, setRegistrationData] = useState(null);
 
   const playingPositions = [
     "GK", "CB", "RB", "LB", "CDM", "CM", "CAM", "LW", "RW", "ST"
@@ -122,6 +126,10 @@ const BookingForm = ({ onClose }) => {
       errors.preferredLocations = "Please select a preferred location";
     }
 
+    if (!formData.paymentAmount || parseFloat(formData.paymentAmount) <= 0) {
+      errors.paymentAmount = "Please enter a valid payment amount";
+    }
+
     // Trial date is optional - if not selected, we'll assign randomly
     // No validation needed here as we handle it in submission
 
@@ -165,7 +173,7 @@ const BookingForm = ({ onClose }) => {
       ...formData,
       trialDate: finalTrialDate,
       trialDateLabel: selectedTrialDate?.label || "Randomly Assigned",
-      tournament: "ATOMICS PRESEASON CUP",
+      tournament: "ATOMICS PRESEASON TRIAL",
       cupDates: "Tuesday - Thursday 26th - 28th August",
       timings: "5:00 PM to 9:00 PM",
       location: "Active Sports Pitches",
@@ -196,10 +204,8 @@ const BookingForm = ({ onClose }) => {
       }
 
       console.log("Registration submitted successfully:", result);
-      toast.success("Registration submitted successfully! You will receive a confirmation shortly.");
-
-      // Close the form
-      onClose();
+      setRegistrationData(result.data);
+      setShowPayment(true);
     } catch (error) {
       console.error("Error submitting registration:", error);
       toast.error(
@@ -210,13 +216,49 @@ const BookingForm = ({ onClose }) => {
     }
   };
 
+  // Handle payment success
+  const handlePaymentSuccess = (paymentIntent) => {
+    toast.success("Payment completed successfully! Your registration is now complete.");
+    onClose();
+  };
+
+  // Handle payment cancellation
+  const handlePaymentCancel = () => {
+    setShowPayment(false);
+    setRegistrationData(null);
+  };
+
+  // Show payment form if registration is successful
+  if (showPayment && registrationData) {
+    return (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+          <div className="p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-bold">Complete Payment</h2>
+              <Button variant="ghost" size="icon" onClick={handlePaymentCancel}>
+                <X className="h-6 w-6" />
+              </Button>
+            </div>
+            <PaymentForm
+              amount={parseFloat(formData.paymentAmount)}
+              onSuccess={handlePaymentSuccess}
+              onCancel={handlePaymentCancel}
+              registrationData={registrationData}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-center w-full">ATOMICS PRESEASON CUP</h2>
+              <h2 className="text-2xl font-bold text-center w-full">ATOMICS PRESEASON TRIAL</h2>
               <div className="text-center mt-2">
                 <Badge className="bg-green-600 text-white mb-2">
                   Free Registration
@@ -240,7 +282,7 @@ const BookingForm = ({ onClose }) => {
               <div className="flex items-center justify-center gap-2">
                 <Calendar className="h-5 w-5 text-blue-600" />
                 <div>
-                  <p className="font-semibold text-sm">Cup Dates</p>
+                  <p className="font-semibold text-sm">Trial Dates</p>
                   <p className="text-xs text-gray-600">Tuesday - Thursday</p>
                   <p className="text-xs text-gray-600">26th - 28th August</p>
                 </div>
@@ -568,6 +610,40 @@ const BookingForm = ({ onClose }) => {
                     <p className="text-xs text-blue-700">
                       💡 <strong>Not sure?</strong> If you don't select a date, we'll randomly assign you to either Tuesday (26th), Wednesday (27th), or Thursday (28th) August.
                     </p>
+                  </div>
+                </div>
+
+                {/* Payment Amount */}
+                <div className="bg-green-50/50 rounded-lg p-4 border border-green-100">
+                  <h4 className="text-sm font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    <CreditCard className="h-4 w-4 text-green-600" />
+                    Payment Information
+                  </h4>
+                  
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="paymentAmount" className="text-sm font-medium text-gray-700">
+                        Payment Amount (AED) *
+                      </Label>
+                      <Input
+                        id="paymentAmount"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="Enter the amount you want to pay"
+                        value={formData.paymentAmount}
+                        onChange={(e) => handleInputChange("paymentAmount", e.target.value)}
+                        className="h-11"
+                      />
+                      <p className="text-xs text-green-600 mt-1">
+                        Please enter the amount you wish to pay for the tournament registration.
+                      </p>
+                      {errors.paymentAmount && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {errors.paymentAmount}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

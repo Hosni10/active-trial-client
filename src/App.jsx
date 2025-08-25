@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout.jsx";
 import FootballClinic from "./pages/FootballTrial.jsx";
+import PaymentSuccess from "./pages/PaymentSuccess.jsx";
 import "./App.css";
 
 function App() {
@@ -23,6 +24,10 @@ function App() {
               <FootballClinic />
             </Layout>
           }
+        />
+        <Route
+          path="/payment-success"
+          element={<PaymentSuccess />}
         />
         <Route
           path="*"
