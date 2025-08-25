@@ -271,22 +271,19 @@ const BookingForm = ({ onClose }) => {
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h2 className="text-2xl font-bold text-center w-full">ATOMICS PRESEASON TRIAL</h2>
+          <div className="flex justify-center items-center mb-6 relative">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold">ATOMICS PRESEASON TRIAL</h2>
               <div className="text-center mt-2">
                 <Badge className="bg-green-600 text-white mb-2">
                   Free Registration
                 </Badge>
                 <p className="text-gray-600 text-sm">
-                  1000 AED Award & Player Investment Programs
-                </p>
-                <p className="text-gray-600 text-sm">
-                  Opportunity to get selected to be part of our Elite team & Compete at Local and International level
+                Your gateway to the Atomics training experience!
                 </p>
               </div>
             </div>
-            <Button variant="ghost" size="icon" onClick={onClose} className="absolute top-4 right-4">
+            <Button variant="ghost" size="icon" onClick={onClose} className="absolute top-0 right-0">
               <X className="h-6 w-6" />
             </Button>
           </div>
@@ -298,8 +295,8 @@ const BookingForm = ({ onClose }) => {
                 <Calendar className="h-5 w-5 text-blue-600" />
                 <div>
                   <p className="font-semibold text-sm">Trial Dates</p>
-                  <p className="text-xs text-gray-600">Tuesday - Thursday</p>
-                  <p className="text-xs text-gray-600">26th - 28th August</p>
+                  <p className="text-xs text-gray-600">You will get a call to schedule your trial date</p>
+                  
                 </div>
               </div>
               <div className="flex items-center justify-center gap-2">
@@ -314,6 +311,9 @@ const BookingForm = ({ onClose }) => {
                 <div>
                   <p className="font-semibold text-sm">Location</p>
                   <p className="text-xs text-gray-600">Active Sports Pitches</p>
+                  <p className="text-xs text-gray-600">OR</p>
+                  <p className="text-xs text-gray-600">Saadiyat Island</p>
+                  
                 </div>
               </div>
             </div>

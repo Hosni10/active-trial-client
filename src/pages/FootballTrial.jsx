@@ -163,16 +163,13 @@ function FootballTrial() {
 
         <div className="relative max-w-7xl mx-auto text-center text-white">
           <div className="mb-8">
-            <Badge className="mb-4 bg-[#ed3227] text-white hover:bg-[#ed3227]/90">
-              Football Trial
-            </Badge>
+
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Join Our Trial
-              <span className="block text-[#ed3227]">Experience Our Training</span>
+              Join Atomics Team This Season
+              <span className="block text-[#ed3227]">Experience Our Training Methodology</span>
             </h1>
             <p className="text-xl mb-8 max-w-3xl mx-auto">
-              Try a session at one of our locations and see how our coaching
-              helps players develop skills, confidence, and game intelligence.
+            Step onto the pitch with us and experience football like never before — where every session unlocks new skills, builds unstoppable confidence, and sharpens true game intelligence.
             </p>
             <Button
               className="bg-[#ed3227] hover:bg-[#ed3227]/90 text-white px-8 py-6 text-lg"
