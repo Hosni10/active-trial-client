@@ -305,7 +305,17 @@ const AdminDashboard = () => {
                   </TableCell>
                   <TableCell>{registration.teamName}</TableCell>
                   <TableCell>
-                    <Badge variant="outline">{registration.playingPosition}</Badge>
+                    {registration.playingPositions && registration.playingPositions.length > 0 ? (
+                      <div className="flex flex-wrap gap-1">
+                        {registration.playingPositions.map((position, index) => (
+                          <Badge key={index} variant="outline" className="text-xs">
+                            {position}
+                          </Badge>
+                        ))}
+                      </div>
+                    ) : (
+                      <Badge variant="outline">{registration.playingPosition}</Badge>
+                    )}
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">

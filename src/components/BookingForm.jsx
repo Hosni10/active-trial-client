@@ -24,7 +24,7 @@ const BookingForm = ({ onClose }) => {
     playerLastName: "",
     teamName: "",
     dateOfBirth: "",
-    playingPosition: "",
+    playingPositions: [],
     divisionLastSeason: "",
     strengthWeakness: "",
     mobileNumber: "",
@@ -84,8 +84,8 @@ const BookingForm = ({ onClose }) => {
       errors.dateOfBirth = "Date of birth is required";
     }
 
-    if (!formData.playingPosition) {
-      errors.playingPosition = "Playing position is required";
+    if (formData.playingPositions.length === 0) {
+      errors.playingPositions = "At least one playing position is required";
     }
 
     if (!formData.divisionLastSeason.trim()) {
@@ -155,6 +155,19 @@ const BookingForm = ({ onClose }) => {
     }
   };
 
+  const handlePlayingPositionChange = (position) => {
+    const updatedPositions = formData.playingPositions.includes(position)
+      ? formData.playingPositions.filter(pos => pos !== position)
+      : [...formData.playingPositions, position];
+    
+    setFormData({ ...formData, playingPositions: updatedPositions });
+    
+    // Clear error when user makes a selection
+    if (errors.playingPositions) {
+      setErrors({ ...errors, playingPositions: "" });
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -171,6 +184,8 @@ const BookingForm = ({ onClose }) => {
 
     const registrationPayload = {
       ...formData,
+      playingPosition: formData.playingPositions.join(", "), // Keep backward compatibility
+      playingPositions: formData.playingPositions, // New array field
       trialDate: finalTrialDate,
       trialDateLabel: selectedTrialDate?.label || "Randomly Assigned",
       tournament: "ATOMICS PRESEASON TRIAL",
@@ -373,51 +388,56 @@ const BookingForm = ({ onClose }) => {
                   )}
                 </div>
 
-                {/* Date of Birth and Position - Side by Side */}
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="dateOfBirth" className="text-sm font-medium text-gray-700">
-                      Date of Birth *
-                    </Label>
-                    <Input
-                      id="dateOfBirth"
-                      type="date"
-                      value={formData.dateOfBirth}
-                      onChange={(e) => handleInputChange("dateOfBirth", e.target.value)}
-                      className="h-11"
-                    />
-                    {errors.dateOfBirth && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errors.dateOfBirth}
-                      </p>
-                    )}
-                  </div>
+                {/* Date of Birth */}
+                <div className="space-y-2">
+                  <Label htmlFor="dateOfBirth" className="text-sm font-medium text-gray-700">
+                    Date of Birth *
+                  </Label>
+                  <Input
+                    id="dateOfBirth"
+                    type="date"
+                    value={formData.dateOfBirth}
+                    onChange={(e) => handleInputChange("dateOfBirth", e.target.value)}
+                    className="h-11"
+                  />
+                  {errors.dateOfBirth && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.dateOfBirth}
+                    </p>
+                  )}
+                </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="playingPosition" className="text-sm font-medium text-gray-700">
-                      Playing Position *
-                    </Label>
-                    <Select
-                      value={formData.playingPosition}
-                      onValueChange={(value) => handleInputChange("playingPosition", value)}
-                    >
-                      <SelectTrigger className="h-11">
-                        <SelectValue placeholder="Select your playing position" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {playingPositions.map((position) => (
-                          <SelectItem key={position} value={position}>
-                            {position}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {errors.playingPosition && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errors.playingPosition}
-                      </p>
-                    )}
+                {/* Playing Positions */}
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-gray-700">
+                    Playing Positions *
+                  </Label>
+                  <p className="text-xs text-blue-600 mb-2">
+                    Select all positions you can play. You can choose multiple positions.
+                  </p>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 p-4 border border-gray-200 rounded-lg bg-gray-50/30">
+                    {playingPositions.map((position) => (
+                      <div key={position} className="flex items-center space-x-2">
+                        <Checkbox
+                          id={`position-${position}`}
+                          checked={formData.playingPositions.includes(position)}
+                          onCheckedChange={() => handlePlayingPositionChange(position)}
+                          className="h-4 w-4"
+                        />
+                        <Label
+                          htmlFor={`position-${position}`}
+                          className="text-sm font-medium text-gray-900 cursor-pointer"
+                        >
+                          {position}
+                        </Label>
+                      </div>
+                    ))}
                   </div>
+                  {errors.playingPositions && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.playingPositions}
+                    </p>
+                  )}
                 </div>
 
                 {/* Division */}
